@@ -1,62 +1,52 @@
-import React, { lazy, useEffect, useState } from 'react';
-import { Navigate, RouteObject, useRoutes,useLocation} from 'react-router-dom';
-import { UiLayout } from './ui/ui-layout';
+import React, { lazy, Suspense } from 'react';
+import { Navigate, useRoutes, useLocation } from 'react-router-dom';
+import { UiLayout } from './components/ui/ui-layout';
 import { useRole } from '../contexts/RoleContext'; 
-
 
 const AccountListFeature = lazy(() => import('./pages/account/account-list-feature'));
 const AccountDetailFeature = lazy(() => import('./pages/account/account-detail-feature'));
-const ClusterFeature = lazy(() => import('./cluster/cluster-feature'));
+const ClusterFeature = lazy(() => import('./components/cluster/cluster-feature'));
 const DashboardFeature = lazy(() => import('./pages/dashboard/dashboard-feature'));
-const Web3MVPFeature = lazy(() => import('./web3-mvp/web3-mvp-feature'));
+const Web3MVPFeature = lazy(() => import('./components/web3-mvp/web3-mvp-feature'));
 const RoleSelect = lazy(() => import('./pages/RoleSelect/role'));
 const VaultCreationForm = lazy(() => import('./pages/strategy/CreateStrategy'));
 
+type RoleType = 'User' | 'Strateger' | 'default';
+
 const AppRoutes = () => {
-  const { role } = useRole(); 
-  const [links, setLinks] = useState<{ label: string; path: string }[]>([]);
+  const { role } = useRole();
   const location = useLocation();
 
+  const linksBasedOnRole: Record<RoleType, { label: string; path: string; }[]> = {
+    'User': [
+      { label: 'Account', path: '/account' },
+    ],
+    'Strateger': [
+      { label: 'Account', path: '/account' },
+      { label: 'Strategy', path: '/strategy' },
+    ],
+    'default': []
+  };
 
-  useEffect(() => {
-    let linksBasedOnRole: React.SetStateAction<{ label: string; path: string; }[]> = [];
-    switch (role) {
-      case 'User':
-        linksBasedOnRole = [
-          { label: 'Account', path: '/account' },
-        ];
-        break;
-      case 'Strateger':
-        linksBasedOnRole = [
-          { label: 'Account', path: '/account' },
-          { label: 'Strategy', path: '/strategy' },
-        ];
-        break;
-
-      default:
-        linksBasedOnRole = [];
-        break;
-    }
-    setLinks(linksBasedOnRole);
-  }, [role]);
-
+  const links = linksBasedOnRole[role as RoleType] || [];
+  
   const routes = useRoutes([
-    { path: '/', element: <Navigate to="/role" replace /> },
+    { path: '/', element: <Navigate to={role ? '/dashboard' : '/role'} replace /> },
+    { path: 'role/', element: <RoleSelect /> },
     { path: '/account/', element: <AccountListFeature /> },
     { path: '/account/:address', element: <AccountDetailFeature /> },
     { path: '/clusters', element: <ClusterFeature /> },
     { path: 'web3-mvp/*', element: <Web3MVPFeature /> },
-    { path: 'role/', element: <RoleSelect /> },
-    { path: '/dashboard', element: <DashboardFeature /> },
+    { path: '/dashboard', element: role ? <DashboardFeature /> : <Navigate to="/role" replace /> },
     { path: '/strategy', element: <VaultCreationForm /> },
-    { path: '*', element: <Navigate to="/role" replace /> }, 
+    { path: '*', element: <Navigate to="/role" replace /> },
   ]);
 
-
-  if (location.pathname === '/role') {
-    return routes; 
-  } else {
-    return <UiLayout links={links}>{routes}</UiLayout>; 
-  }
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {location.pathname === '/role' || !role ? routes : <UiLayout links={links}>{routes}</UiLayout>}
+    </Suspense>
+  );
 };
+
 export default AppRoutes;

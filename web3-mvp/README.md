@@ -7,7 +7,6 @@ This project is generated with the [create-solana-dapp](https://github.com/solan
 ### Prerequisites
 
 - Node v18.18.0 or higher
-
 - Rust v1.70.0 or higher
 - Anchor CLI 0.29.0 or higher
 - Solana CLI 1.17.0 or higher

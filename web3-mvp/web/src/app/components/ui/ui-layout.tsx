@@ -4,7 +4,7 @@ import { ReactNode, Suspense, useEffect, useRef } from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
 
-import { AccountChecker } from '../pages/account/account-ui';
+import { AccountChecker } from '../../pages/account/account-ui';
 import {
   ClusterChecker,
   ClusterUiSelect,

@@ -1,5 +1,5 @@
 import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletButton } from '../../solana/solana-provider';
+import { WalletButton } from '../../components/solana/solana-provider';
 import { Navigate } from 'react-router-dom';
 
 export default function AccountListFeature() {

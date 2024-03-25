@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
-import type { GetProp, UploadProps } from 'antd';
+import type { GetProp, UploadProps,Space} from 'antd';
+import { USDTColorful} from '@ant-design/web3-icons';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -138,7 +139,9 @@ const handleChange: UploadProps['onChange'] = (info) => {
           <textarea name="whitelistWallets" value={formData.whitelistWallets} onChange={handleInputChange} className="textarea textarea-bordered w-full" rows={3}></textarea>
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Management Fee (0-5%)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Management Fee (0-5%)
+          <USDTColorful />
+          </label>
           <input type="range" name="managementFee" value={formData.managementFee} onChange={handleInputChange} className="range range-primary" min="0" max="5" step="0.1" />
           <div className="w-full flex justify-between text-xs text-gray-600">
             <span>0%</span>

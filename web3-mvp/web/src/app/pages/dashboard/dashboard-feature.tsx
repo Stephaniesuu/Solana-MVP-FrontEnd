@@ -1,4 +1,4 @@
-import { AppHero } from '../../ui/ui-layout';
+import { AppHero } from '../../components/ui/ui-layout';
 
 
 

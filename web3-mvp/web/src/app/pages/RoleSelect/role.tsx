@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useRole } from '../../../contexts/RoleContext'; // 确保路径正确
+import { useRole } from '../../../contexts/RoleContext';
 
 const RoleSelect: React.FC = () => {
   const { setRole } = useRole();
@@ -68,7 +68,6 @@ const RoleSelect: React.FC = () => {
                   </span>
                 </button>
               </div>
-
             </div>
           </div>
         </div>

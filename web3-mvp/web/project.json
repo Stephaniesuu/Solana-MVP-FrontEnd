@@ -11,11 +11,11 @@
       "options": {
         "compiler": "babel",
         "outputPath": "dist/web",
-        "index": "web/src/index.html",
+        "index": "web/public/index.html",
         "baseHref": "/",
         "main": "web/src/main.tsx",
         "tsConfig": "web/tsconfig.app.json",
-        "assets": ["web/src/favicon.ico", "web/src/assets"],
+        "assets": ["web/src/assets/favicon.ico", "web/src/assets"],
         "styles": ["web/src/styles.css"],
         "scripts": [],
         "webpackConfig": "web/webpack.config.js",
