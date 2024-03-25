@@ -1,6 +1,9 @@
 # web3-mvp
 
-This project is generated with the [create-solana-dapp](https://github.com/solana-developers/create-solana-dapp) generator.
+## tech stacks
+* TypeScript
+* tailwindcss
+* React
 
 ## Getting Started
 
