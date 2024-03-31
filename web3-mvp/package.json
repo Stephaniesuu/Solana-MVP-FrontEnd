@@ -17,6 +17,10 @@
     "@ant-design/web3-icons": "^1.4.2",
     "@ant-design/web3-wagmi": "^2.4.1",
     "@coral-xyz/anchor": "^0.29.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@solana-developers/preset-react": "2.2.0",
     "@solana/spl-token": "0.4.1",
     "@solana/wallet-adapter-base": "^0.9.23",
@@ -27,6 +31,7 @@
     "@tabler/icons-react": "2.47.0",
     "@tailwindcss/typography": "0.5.10",
     "@tanstack/react-query": "5.24.1",
+    "@web3uikit/core": "^1.1.5",
     "antd": "^5.15.3",
     "bs58": "5.0.0",
     "buffer": "6.0.3",
@@ -82,6 +87,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "typescript": "~5.2.2",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "vm-browserify": "^1.1.2"
   }
 }

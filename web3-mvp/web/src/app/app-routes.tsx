@@ -1,52 +1,39 @@
-import React, { lazy, Suspense } from 'react';
-import { Navigate, useRoutes, useLocation } from 'react-router-dom';
+import React, { lazy } from 'react';
+import { Navigate, useRoutes, RouteObject } from 'react-router-dom';
 import { UiLayout } from './components/ui/ui-layout';
-import { useRole } from '../contexts/RoleContext'; 
 
+import DashboardFeature from './pages/dashboard/dashboard-feature';
 const AccountListFeature = lazy(() => import('./pages/account/account-list-feature'));
 const AccountDetailFeature = lazy(() => import('./pages/account/account-detail-feature'));
 const ClusterFeature = lazy(() => import('./components/cluster/cluster-feature'));
-const DashboardFeature = lazy(() => import('./pages/dashboard/dashboard-feature'));
-const Web3MVPFeature = lazy(() => import('./components/web3-mvp/web3-mvp-feature'));
-const RoleSelect = lazy(() => import('./pages/RoleSelect/role'));
 const VaultCreationForm = lazy(() => import('./pages/strategy/CreateStrategy'));
+const ProfileListFeature = lazy(() => import('./pages/profile/profile-list-feature'));
+const ProfileDetailFeature = lazy(() => import('./pages/profile/profile-detail-feature'));
 
-type RoleType = 'User' | 'Strateger' | 'default';
-
-const AppRoutes = () => {
-  const { role } = useRole();
-  const location = useLocation();
-
-  const linksBasedOnRole: Record<RoleType, { label: string; path: string; }[]> = {
-    'User': [
-      { label: 'Account', path: '/account' },
-    ],
-    'Strateger': [
-      { label: 'Account', path: '/account' },
-      { label: 'Strategy', path: '/strategy' },
-    ],
-    'default': []
-  };
-
-  const links = linksBasedOnRole[role as RoleType] || [];
+const links: { label: string; path: string }[] = [
+  { label: 'User', path: '/account' },
+];
   
-  const routes = useRoutes([
-    { path: '/', element: <Navigate to={role ? '/dashboard' : '/role'} replace /> },
-    { path: 'role/', element: <RoleSelect /> },
+  
+  const routes: RouteObject[] = [
     { path: '/account/', element: <AccountListFeature /> },
     { path: '/account/:address', element: <AccountDetailFeature /> },
-    { path: '/clusters', element: <ClusterFeature /> },
-    { path: 'web3-mvp/*', element: <Web3MVPFeature /> },
-    { path: '/dashboard', element: role ? <DashboardFeature /> : <Navigate to="/role" replace /> },
-    { path: '/strategy', element: <VaultCreationForm /> },
-    { path: '*', element: <Navigate to="/role" replace /> },
-  ]);
+    { path: '/profile', element:<ProfileListFeature />},
+    { path: '/profile/:address', element: <ProfileDetailFeature /> },
+    { path: '/createVault', element:<VaultCreationForm />}
+    // { path: '/clusters', element: <ClusterFeature /> },
+  ];
+  
+  export function AppRoutes() {
+    return (
+      <UiLayout links={links}>
+        {useRoutes([
+          { index: true, element: <Navigate to={'/dashboard'} replace={true} /> },
+          { path: '/dashboard', element: <DashboardFeature /> },
+          ...routes,
+          { path: '*', element: <Navigate to={'/dashboard'} replace={true} /> },
+        ])}
+      </UiLayout>
+    );
+  }
 
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {location.pathname === '/role' || !role ? routes : <UiLayout links={links}>{routes}</UiLayout>}
-    </Suspense>
-  );
-};
-
-export default AppRoutes;

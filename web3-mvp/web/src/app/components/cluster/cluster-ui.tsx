@@ -61,31 +61,31 @@ export function ClusterChecker({ children }: { children: ReactNode }) {
 export function ClusterUiSelect() {
   const { clusters, setCluster, cluster } = useCluster();
   return (
-<div className="dropdown dropdown-end relative">
-  <label
-    tabIndex={0}
-    className="btn btn-primary rounded-btn dropdown-toggle "
-  >
-    {cluster.name}
-  </label>
-  <ul
-    tabIndex={0}
-    className="menu dropdown-content bg-base-100 shadow-lg rounded-box w-52 wallet-adapter-dropdown-list"
-  >
-    {clusters.map((item) => (
-      <li key={item.name}>
-        <button
-          className={`btn btn-sm ${
-            item.active ? 'btn-primary' : 'btn-ghost'
-          } wallet-adapter-button`}
-          onClick={() => setCluster(item)}
-        >
-          {item.name}
-        </button>
-      </li>
-    ))}
-  </ul>
-</div>
+    <div className="dropdown dropdown-end relative flex-none">
+      <label
+        tabIndex={0}
+        className="btn btn-primary rounded-btn dropdown-toggle "
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+        {cluster.name}
+      </label>
+      <ul
+        tabIndex={0}
+        className="menu dropdown-content bg-base-100 shadow-lg rounded-box w-52 wallet-adapter-dropdown-list"
+      >
+        {clusters.map((item) => (
+          <li key={item.name}>
+            <button
+              className={`btn btn-sm ${item.active ? 'btn-primary' : 'btn-ghost'
+                } wallet-adapter-button`}
+              onClick={() => setCluster(item)}
+            >
+              {item.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
 
   );
 }

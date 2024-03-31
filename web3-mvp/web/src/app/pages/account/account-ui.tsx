@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { AppModal, ellipsify } from '../../components/ui/ui-layout';
 import { useCluster } from '../../components/cluster/cluster-data-access';
-import { ExplorerLink } from '../../components/cluster/cluster-ui';
+import { ClusterUiSelect, ExplorerLink } from '../../components/cluster/cluster-ui';
 import {
   useGetBalance,
   useGetSignatures,
@@ -19,13 +19,15 @@ export function AccountBalance({ address }: { address: PublicKey }) {
 
   return (
     <div>
-      <h1
+      {/* <h1
         className="text-5xl font-bold cursor-pointer"
         onClick={() => query.refetch()}
       >
         {query.data ? <BalanceSol balance={query.data} /> : '...'} SOL
-      </h1>
+      </h1> */}
+
     </div>
+    
   );
 }
 export function AccountChecker() {
@@ -88,28 +90,7 @@ export function AccountButtons({ address }: { address: PublicKey }) {
         show={showSendModal}
         hide={() => setShowSendModal(false)}
       />
-      <div className="space-x-2">
-        <button
-          disabled={cluster.network?.includes('mainnet')}
-          className="btn btn-xs lg:btn-md btn-outline"
-          onClick={() => setShowAirdropModal(true)}
-        >
-          Airdrop
-        </button>
-        <button
-          disabled={wallet.publicKey?.toString() !== address.toString()}
-          className="btn btn-xs lg:btn-md btn-outline"
-          onClick={() => setShowSendModal(true)}
-        >
-          Send
-        </button>
-        <button
-          className="btn btn-xs lg:btn-md btn-outline"
-          onClick={() => setShowReceiveModal(true)}
-        >
-          Receive
-        </button>
-      </div>
+
     </div>
   );
 }

@@ -11,7 +11,7 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   daisyui: {
-    themes: ["light", "dark", "cupcake","emberald","winter"],
+    themes: ["light", "dark", "cupcake","emberald","winter","wireframe"],
   },
   theme: {
     extend: {},
