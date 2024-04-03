@@ -1,5 +1,4 @@
 import { WalletButton } from '../solana/solana-provider';
-import * as React from 'react';
 import { ReactNode, Suspense, useEffect, useRef } from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
@@ -34,6 +33,7 @@ export function UiLayout({
         <div className='flex-1 flex justify-end'>
           <div className="flex space-x-2 px-4 justify-end">
             <WalletButton />
+            <ClusterUiSelect />
           </div>
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

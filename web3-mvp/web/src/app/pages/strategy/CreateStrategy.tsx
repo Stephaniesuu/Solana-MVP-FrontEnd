@@ -156,7 +156,7 @@ const VaultForm: React.FC = () => {
           <span className="block text-lg font-semibold mb-2 mr-2">Acceptable Deposit:</span>
           <div className="flex gap-2">
             {(['USDC'] as DepositType[]).map((currency) => (
-              <label key={currency} className={`btn ${formData.acceptableDeposit === currency ? 'btn-active' : 'btn-outline'}`}>
+              <label key={currency} className={`btn btn-sm ${formData.acceptableDeposit === currency ? 'btn-active' : 'btn-outline'}`}>
                 <input
                   type="radio"
                   name="acceptableDeposit"
@@ -180,7 +180,7 @@ const VaultForm: React.FC = () => {
                 key={`manager-${currency}`}
                 type="button"
                 onClick={() => handleManagerDepositCurrencyChange(currency)}
-                className={`btn ${formData.managerDeposit.currency === currency ? 'btn-active' : 'btn-outline'}`}
+                className={`btn btn-sm ${formData.managerDeposit.currency === currency ? 'btn-active' : 'btn-outline'}`}
               >
                 {currency}
               </button>
@@ -190,7 +190,7 @@ const VaultForm: React.FC = () => {
               name="managerAmount"
               value={formData.managerDeposit.amount}
               onChange={handleManagerDepositAmountChange}
-              className="input input-bordered flex-1 "
+              className="input input-bordered flex-1 input-sm w-24"
               placeholder="Amount"
             />
           </div>
@@ -218,7 +218,7 @@ const VaultForm: React.FC = () => {
         {/* Performance Benchmark Input */}
         <div className="mb-4 flex items-center justify-between">
           <div className="tooltip tooltip-left" data-tip="Enter the minimum performance target for the strategy">
-            <label className="block text-lg font-semibold mb-2 whitespace-nowrap">Performance Benchmark:</label>
+            <label className="block mr-10 text-lg font-semibold mb-2 whitespace-nowrap">Performance Benchmark:</label>
           </div>
           <input
             type="text"
