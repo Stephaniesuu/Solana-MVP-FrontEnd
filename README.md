@@ -1,4 +1,4 @@
-# bookish-octo-fiesta
+# Solana-Mvp
 For hackathon development.
 
 
