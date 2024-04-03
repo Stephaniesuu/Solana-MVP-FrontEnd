@@ -14,7 +14,6 @@ import toast, { Toaster } from 'react-hot-toast';
 
 export function UiLayout({
   children,
-  links,
 }: {
   children: ReactNode;
   links: { label: string; path: string }[];
@@ -23,55 +22,33 @@ export function UiLayout({
 
   return (
     <div data-theme="winter" className="h-full flex flex-col ">
-      {/* <div className="navbar bg-base-300 shadow-lg text-neutral-content flex-col md:flex-row md:space-x-4">
-        <div className="flex-none px-4 py-2">
-          <Link to="/dashboard">
-            <img className="h-6 md:h-8" alt="Solana Logo" src="/assets/solana-logo.png" />
+      <div className="navbar bg-base-300">
+        <div className="flex-1 flex justify-start">
+          <a className="btn btn-ghost text-3xl font-extrabold" href='/dashboard'>Axon</a>
+        </div>
+        <div className='flex-1 flex justify-center'>
+          <Link to="/createVault" className=" w-60 btn btn-m text-lg">
+            Create Vault
           </Link>
         </div>
-        <div className="flex-grow px-2 mx-2">
-          <ul className="menu menu-horizontal ">
-            {links.map(({ label, path }) => (
-              <li key={path}>
-                <Link
-                  className={`btn btn-ghost rounded-lg ${pathname.startsWith(path) ? 'text-gray-700 bg-base-200' : 'text-gray-500 hover:bg-base-200'}`}
-                  to={path}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="flex-none space-x-2 px-4">
-          <WalletButton />
-        </div>
-      </div> */}
-      <div className="navbar bg-base-300">
-        <div className="flex-1">
-          <a className="btn btn-ghost text-xl" href='/dashboard'>Axon</a>
-        </div>
-        <div className="flex-none space-x-2 px-4">
-                <WalletButton />
+        <div className='flex-1 flex justify-end'>
+          <div className="flex space-x-2 px-4 justify-end">
+            <WalletButton />
+          </div>
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                </div>
               </div>
-        <div className="flex-none gap-2">
-          <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-              </div>
-            </div>
-            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-              <li>
-                <a className="justify-between" onClick={() => window.location.href = '/profile'}>
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li><a>Settings</a></li>
-              <li><a>Login</a></li>
-            
-            </ul>
+              <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                <li>
+                  <a className="justify-between" onClick={() => window.location.href = '/profile'}>
+                    Profile
+                    <span className="badge">New</span>
+                  </a>
+                </li>
+              </ul>
           </div>
         </div>
       </div>

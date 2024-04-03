@@ -1,4 +1,4 @@
-import React, { useState,useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { Form, InputNumber, Alert } from 'antd';
 
 type DepositType = 'USDC' | 'USDT';
@@ -71,16 +71,13 @@ const VaultForm: React.FC = () => {
 
   // 处理开关切换
   const handleToggleHideStrategy = () => {
-    // 暂时无法切换
-    setHideStrategy(hideStrategy);
+    setHideStrategy(!hideStrategy);
   };
 
   // 处理输入变更
   const handlePerformInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setter(event.target.value);
   };
-
-
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     console.log(formData);
@@ -90,12 +87,12 @@ const VaultForm: React.FC = () => {
     console.log(myHeaders)
     const TokenCreate = new FormData();
     TokenCreate.append("network", "devnet");
-    TokenCreate.append("wallet", '5fZrWinrY1emHLoQ75wUmGjN8WqpqXYTcFX6TVyx1wDD'); 
+    TokenCreate.append("wallet", '5fZrWinrY1emHLoQ75wUmGjN8WqpqXYTcFX6TVyx1wDD');
     TokenCreate.append("name", formData.vaultName);
     TokenCreate.append("symbol", formData.vaultSymbol);
     TokenCreate.append("description", formData.vaultDescription);
     // TokenCreate.append("file", "geeko.jpeg");
-    console.log("mint",TokenCreate);
+    console.log("mint", TokenCreate);
     const requestOptions: RequestInit = {
       method: 'POST',
       headers: myHeaders,
@@ -111,7 +108,7 @@ const VaultForm: React.FC = () => {
 
 
   return (
-    <div className="container max-w-6xl mx-auto p-10 mt-10 mb-10 shadow-lg rounded-lg">
+    <div className="container w-full mx-auto p-10 mt-10 mb-10 shadow-lg rounded-lg">
       <form onSubmit={handleSubmit}>
         {/* Vault Name */}
         <div className="mb-4 flex items-center">
@@ -158,7 +155,7 @@ const VaultForm: React.FC = () => {
         <div className="mb-4 flex items-center">
           <span className="block text-lg font-semibold mb-2 mr-2">Acceptable Deposit:</span>
           <div className="flex gap-2">
-            {(['USDC', 'USDT'] as DepositType[]).map((currency) => (
+            {(['USDC'] as DepositType[]).map((currency) => (
               <label key={currency} className={`btn ${formData.acceptableDeposit === currency ? 'btn-active' : 'btn-outline'}`}>
                 <input
                   type="radio"
@@ -178,7 +175,7 @@ const VaultForm: React.FC = () => {
         <div className="mb-4 flex items-center">
           <span className="block text-lg font-semibold mb-2 mr-2">Manager Deposit:</span>
           <div className="flex gap-2 items-center">
-            {(['USDC', 'USDT'] as DepositType[]).map((currency) => (
+            {(['USDC'] as DepositType[]).map((currency) => (
               <button
                 key={`manager-${currency}`}
                 type="button"
@@ -193,7 +190,7 @@ const VaultForm: React.FC = () => {
               name="managerAmount"
               value={formData.managerDeposit.amount}
               onChange={handleManagerDepositAmountChange}
-              className="input input-bordered flex-1"
+              className="input input-bordered flex-1 "
               placeholder="Amount"
             />
           </div>
@@ -207,13 +204,13 @@ const VaultForm: React.FC = () => {
         {/* Hide Strategy Switch */}
         <div className="mb-4 flex items-center justify-between">
           <div className="tooltip tooltip-left" data-tip="Choose whether to hide the strategy details from the vault page">
-            <label className="block text-lg font-semibold mb-2 min-w-[160px] whitespace-nowrap">Hide strategy?</label>
+            <label className="block text-lg font-semibold mb-2 whitespace-nowrap">Hide strategy?</label>
           </div>
           <div className="form-control">
             <label className="label cursor-pointer">
-              <span className="label-text">yes</span>
-              <input type="checkbox" checked={hideStrategy} onChange={handleToggleHideStrategy} className="toggle toggle-accent" />
-              <span className="label-text">no</span>
+              <span className="label-text mr-1">no</span>
+              <input type="checkbox" checked={hideStrategy} onChange={handleToggleHideStrategy} className="toggle toggle-info" />
+              <span className="label-text ml-1">yes</span>
             </label>
           </div>
         </div>
@@ -221,7 +218,7 @@ const VaultForm: React.FC = () => {
         {/* Performance Benchmark Input */}
         <div className="mb-4 flex items-center justify-between">
           <div className="tooltip tooltip-left" data-tip="Enter the minimum performance target for the strategy">
-            <label className="block text-lg font-semibold mb-2 min-w-[160px] whitespace-nowrap">Performance Benchmark:</label>
+            <label className="block text-lg font-semibold mb-2 whitespace-nowrap">Performance Benchmark:</label>
           </div>
           <input
             type="text"
@@ -235,7 +232,7 @@ const VaultForm: React.FC = () => {
         {/* Performance Fee Input */}
         <div className="mb-4 flex items-center justify-between">
           <div className="tooltip tooltip-left" data-tip="Enter the performance fee percentage">
-            <label className="block text-lg font-semibold mb-2 min-w-[160px] whitespace-nowrap">Performance Fee:</label>
+            <label className="block text-lg font-semibold mb-2 whitespace-nowrap">Performance Fee:</label>
           </div>
           <input
             type="text"
@@ -249,7 +246,7 @@ const VaultForm: React.FC = () => {
         {/* Management Fee Input */}
         <div className="mb-4 flex items-center justify-between">
           <div className="tooltip tooltip-left" data-tip="Enter the management fee percentage">
-            <label className="block text-lg font-semibold mb-2 min-w-[160px] whitespace-nowrap">Management Fee:</label>
+            <label className="block text-lg font-semibold mb-2 whitespace-nowrap">Management Fee:</label>
           </div>
           <input
             type="text"
@@ -262,7 +259,7 @@ const VaultForm: React.FC = () => {
 
         {/* Submit Button */}
         <div className="flex justify-center mt-10">
-          <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Create Vault</button>
+          <button type="submit" className="btn btn-lg" onClick={handleSubmit}>Create Vault</button>
         </div>
       </form>
     </div>
@@ -294,10 +291,12 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) 
   }
   const [selectedCryptos, setSelectedCryptos] = useState<Crypto[]>([]);
   const [totalPercentage, setTotalPercentage] = useState(0);
+  const [vaultType, setVaultType] = useState('private'); // default value
 
   const cryptoOptions = [
-    { label: 'BTC', value: 'btc' },
-    { label: 'ETH', value: 'eth' },
+    // solana 生态
+    { label: 'SOL', value: 'sol' },
+    { label: 'JUP', value: 'jup' },
 
   ];
 
@@ -319,45 +318,47 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) 
     }
   };
 
+  const handleVaultTypeChange = () => {
+    setVaultType((prevType) => (prevType === "private" ? "public" : "private"));
+  };
 
   const handleRemoveCrypto = (indexToRemove: number) => {
-    // 使用数组的filter方法创建一个新数组，该数组不包含要移除的加密货币
     const newSelectedCryptos = selectedCryptos.filter((_, index) => index !== indexToRemove);
 
-    // 设置新的selectedCryptos状态
     setSelectedCryptos(newSelectedCryptos);
 
-    // 更新总百分比
+    // update total percentage
     const newTotalPercentage = newSelectedCryptos.reduce((total, { percentage }) => total + percentage, 0);
     setTotalPercentage(newTotalPercentage);
   };
 
   return (
-    <div className='p-4 border-2 border-t-gray-100 rounded-2xl mb-4'>
-      <div role="tablist" className="mb-8 tabs tabs-lifted  space-x-2">
-        <input
-          type="radio"
-          name="strategy_tabs"
-          role="tab"
-          className="tab"
-          id="tab-trading"
-          aria-label="Trading"
-          value="trading"
-          checked={strategy === 'Trading'}
-          onChange={handleStrategyChange}
-        />
-        <div role="tabpanel" className="">
-          <div className="form-control w-full">
-            <div className="flex justify-between items-end">
-              <label className="label flex-1 mr-40">
+
+      <div role="tablist" className="tabs tabs-bordered mb-4">
+        <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Trading" />
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+        <div className="flex justify-between items-end">
+              <label className="label flex-1">
                 <span className="label-text"></span>
               </label>
-              <label className="label flex-1">
-                <span className="label-text">Vault type : </span>
-                <input type="radio" checked disabled className="radio radio-primary" />
-                <span className="label-text ml-2">Private</span>
-              </label>
-x            </div>
+              <div className="mt-2 mb-2 flex items-center justify-between">
+                <div className="tooltip tooltip-left" data-tip="Select vault type">
+                  <label className="block text-sm font-semibold whitespace-nowrap">Vault Type:</label>
+                </div>
+                <div className="form-control">
+                  <label className="label cursor-pointer">
+                    <span className="label-text ml-1 mr-1">Private</span>
+                    <input
+                      type="checkbox"
+                      checked={vaultType === "public"}
+                      onChange={handleVaultTypeChange}
+                      className="toggle toggle-info"
+                    />
+                    <span className="label-text ml-1">Public</span>
+                  </label>
+                </div>
+              </div>
+            </div>
             <select
               className="select select-bordered w-full"
               onChange={handleCryptoChange}
@@ -367,9 +368,8 @@ x            </div>
                 <option key={option.value} value={option.value}>{option.label}</option>
               ))}
             </select>
-
-            {/* 加密货币条目列表 */}
-            {selectedCryptos.map((crypto, index) => (
+                        {/* 加密货币条目列表 */}
+                        {selectedCryptos.map((crypto, index) => (
               <div key={crypto.value} className="flex items-center mb-2 mt-2">
                 <div className="flex-none width-8 text-center font-bold">{index + 1}</div>
                 <div className="flex-auto mx-2">
@@ -386,7 +386,7 @@ x            </div>
                   />
                 </div>
                 <button
-                  className="btn btn-info btn-circle btn-xs"
+                  className="btn btn-circle btn-xs"
                   onClick={() => handleRemoveCrypto(index)}
                 >
                   x
@@ -402,36 +402,17 @@ x            </div>
               </div>
             )}
 
-
-          </div>
         </div>
-        {/* <input
-        type="radio"
-        name="strategy_tabs"
-        role="tab"
-        className="tab"
-        id="tab-lp-farming"
-        aria-label="LP Farming"
-        value="lp_farming"
-        checked={strategy === 'lp_farming'}
-        onChange={handleStrategyChange}
-      />
-      <label htmlFor="tab-lp-farming" className="tab"></label>
 
-      <input
-        type="radio"
-        name="strategy_tabs"
-        role="tab"
-        className="tab"
-        id="tab-lending"
-        aria-label="Lending"
-        value="lending"
-        checked={strategy === 'lending'}
-        onChange={handleStrategyChange}
-      />
-      <label htmlFor="tab-lending" className="tab"></label> */}
-      </div>
-    </div>
+          
+
+        <input type="radio" name="my_tabs_1" role="tab" className="tab tab-disabled" aria-label="LP Farming" />
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">🏃 Coming soon...</div>
+
+        <input type="radio" name="my_tabs_1" role="tab" className="tab tab-disabled" aria-label="Lending" />
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">🏃 Coming soon...</div>
+      </div >
+
 
   );
 };

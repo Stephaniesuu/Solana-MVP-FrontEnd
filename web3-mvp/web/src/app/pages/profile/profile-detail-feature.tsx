@@ -90,9 +90,7 @@ export default function ProfilePage() {
                         {isTwitterLinked ? (
                             <div className="flex items-center gap-4">
                                 <p className="text-base font-medium text-green-600 mb-0">✅ Twitter: Linked</p>
-                                <Link to="/createVault" className="btn btn-outline btn-info">
-                                    Create Vault
-                                </Link>
+
                             </div>
                         ) : (
                             <button onClick={handleTwitterLink} className="btn btn-outline btn-default hover:underline text-base mb-8">
@@ -114,55 +112,115 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="divider"></div>
-                <div className="flex flex-col md:flex-row items-start md:items-center p-10 shadow-md sga rounded-3xl">
-                    <div className="overflow-x-auto">
-                        <h1 className=' text-center justify-center mb-3'>Protofilio</h1>
-                        <table className="min-w-full text-sm divide-y divide-gray-200">
-                            <thead>
-                                <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Name of Vault
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Total Investment (USD)
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Target return
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Actual return
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-200">
-                                {profile.vaultItems.map((vault, index) => (
-                                    <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            {vault.name}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            ${vault.totalInvestment.toLocaleString()}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            {vault.targetReturn}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            {vault.actualReturn}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button className="btn btn-outline btn-info btn-xs">
-                                                Redeem
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                {isTwitterLinked ? (
+                    <div className="flex flex-col md:flex-row items-start md:items-center p-10 shadow-md sga rounded-3xl">
+                        <div className="overflow-x-auto">
+                            <div role="tablist" className="tabs tabs-lifted tabs-lg">
+                                <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Portfolio"  checked />
+                                <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+                                    <table className="min-w-full text-sm divide-y divide-gray-200">
+                                        <thead>
+                                            <tr>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Name of Vault
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Total Investment (USD)
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Target return
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Actual return
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-gray-200">
+                                            {profile.vaultItems.map((vault, index) => (
+                                                <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        {vault.name}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        ${vault.totalInvestment.toLocaleString()}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        {vault.targetReturn}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        {vault.actualReturn}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <button className="btn btn-outline btn-info btn-xs">
+                                                            Redeem
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <input type="radio" name="my_tabs_2" role="tab" className="tab " aria-label="Managed Fund" />
+                                <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+
+                                    <table className="min-w-full text-sm divide-y divide-gray-200">
+                                        <thead>
+                                            <tr>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Name of Vault
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    AUM (USD)
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Target return
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Actual return
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-gray-200">
+                                            {profile.vaultItems.map((vault, index) => (
+                                                <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        {vault.name}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        ${vault.totalInvestment.toLocaleString()}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        {vault.targetReturn}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        {vault.actualReturn}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <button className="btn btn-outline btn-info btn-xs">
+                                                            Details
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div className="text-center p-10">
+                        <p>Please connect your Twitter account first to view Protofilio information of your vault.</p>
+                    </div>
+                )}
             </div>
         </div>
 

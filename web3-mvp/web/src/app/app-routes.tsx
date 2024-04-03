@@ -6,7 +6,7 @@ import DashboardFeature from './pages/dashboard/dashboard-feature';
 const AccountListFeature = lazy(() => import('./pages/account/account-list-feature'));
 const AccountDetailFeature = lazy(() => import('./pages/account/account-detail-feature'));
 const ClusterFeature = lazy(() => import('./components/cluster/cluster-feature'));
-const VaultCreationForm = lazy(() => import('./pages/strategy/CreateStrategy'));
+const VaultCreationForm = lazy(() => import('./pages/strategy/createStrategy'));
 const ProfileListFeature = lazy(() => import('./pages/profile/profile-list-feature'));
 const ProfileDetailFeature = lazy(() => import('./pages/profile/profile-detail-feature'));
 
