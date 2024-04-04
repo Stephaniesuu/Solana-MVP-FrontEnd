@@ -396,7 +396,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) 
   return (
 
     <div role="tablist" className="tabs tabs-bordered mb-4">
-      <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Trading" checked/>
+      <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Trading" checked />
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
         <div className="flex justify-between items-end">
           <label className="label flex-1">
@@ -476,8 +476,6 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) 
         )}
 
       </div>
-
-
 
       <input type="radio" name="my_tabs_1" role="tab" className="tab tab-disabled" aria-label="LP Farming" />
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">🏃 Coming soon...</div>
