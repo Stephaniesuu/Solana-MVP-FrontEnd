@@ -5,7 +5,7 @@ import { UiLayout } from './components/ui/ui-layout';
 const AccountListFeature = lazy(() => import('./pages/account/account-list-feature'));
 const AccountDetailFeature = lazy(() => import('./pages/account/account-detail-feature'));
 const ClusterFeature = lazy(() => import('./components/cluster/cluster-feature'));
-const VaultCreationForm = lazy(() => import('./pages/strategy/createStrategy'));
+const VaultCreationForm = lazy(() => import('./pages/strategy/CreateStrategy'));
 const ProfileListFeature = lazy(() => import('./pages/profile/profile-list-feature'));
 const ProfileDetailFeature = lazy(() => import('./pages/profile/profile-detail-feature'));
 const Marketplace = lazy(() => import('./pages/Marketplace/marketplace'));

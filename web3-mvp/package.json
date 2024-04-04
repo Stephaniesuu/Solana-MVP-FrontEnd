@@ -32,7 +32,7 @@
     "@tailwindcss/typography": "0.5.10",
     "@tanstack/react-query": "5.24.1",
     "@web3uikit/core": "^1.1.5",
-    "antd": "^5.15.3",
+    "antd": "^5.16.0",
     "bs58": "5.0.0",
     "buffer": "6.0.3",
     "crypto-browserify": "3.12.0",
