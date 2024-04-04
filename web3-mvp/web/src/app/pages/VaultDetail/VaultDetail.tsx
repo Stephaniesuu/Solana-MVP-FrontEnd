@@ -16,8 +16,8 @@ const VaultDetail: React.FC = () => {
   };
 
   return (
-    <div className="p-4">
-      <div className="bg-white p-4 rounded shadow">
+    <div className="p-4 mt-10">
+      <div className="bg-white p-4 rounded shadow ">
         <h2 className="text-xl font-bold mb-2 text-black">Meme Maxi (MEME)</h2>
         <p>Jason Chow | Twitter: @Jason</p>
         <p className="text-gray-600">Vault Description: All invested on Meme</p>

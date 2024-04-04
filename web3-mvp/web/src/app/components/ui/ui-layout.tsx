@@ -21,12 +21,12 @@ export function UiLayout({
 
   return (
     <div data-theme="winter" className="h-full flex flex-col ">
-      <div className="navbar bg-base-100 glass shadow-md">
+      <div className="navbar bg-base-100 bg-opacity-60 glass shadow-md fixed top-0 w-full z-50 backdrop-blur-sm ">
         <div className="flex-1 flex justify-start">
           <a className="btn btn-ghost text-3xl font-extrabold axon-brand" href='/marketplace'>Axon</a>
         </div>
         <div className='flex-1 flex justify-center'>
-          <Link to="/createVault" className="btn w-60 btn-m text-lg shadow-md ">
+          <Link to="/createVault" className="btn w-60 btn-m text-lg shadow-md">
             Create Vault
           </Link>
         </div>
@@ -35,27 +35,28 @@ export function UiLayout({
             <ClusterUiSelect />
             <WalletButton />
           </div>
-            <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full">
-                  <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                </div>
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img alt="User avatar" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
               </div>
-              <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                <li>
-                  <a className="justify-between" onClick={() => window.location.href = '/profile'}>
-                    Profile
-                    <span className="badge">New</span>
-                  </a>
-                </li>
-              </ul>
+            </div>
+            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+              <li>
+                <a className="justify-between" onClick={() => window.location.href = '/profile'}>
+                  Profile
+                  <span className="badge">New</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
+
       <ClusterChecker>
         <AccountChecker />
       </ClusterChecker>
-      <div className="flex-grow mx-4 lg:mx-auto">
+      <div className="flex-grow mx-4 lg:mx-auto mt-7">
         <Suspense
           fallback={
             <div className="text-center my-32">
