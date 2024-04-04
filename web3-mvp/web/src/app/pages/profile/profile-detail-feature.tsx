@@ -82,7 +82,7 @@ export default function ProfilePage() {
                                 Hi, {profile.name}
                             </h1>
                         ) : (
-                            <h1 className="text-5xl font-bold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 ">
+                            <h1 className="text-3xl font-bold mb-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600  ">
                                 Please link your twitter...
                             </h1>
                         )

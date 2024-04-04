@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, ChangeEvent } from 'react';
 import { Form, InputNumber, Alert } from 'antd';
 
 type DepositType = 'USDC' | 'USDT';
@@ -25,6 +25,9 @@ const VaultForm: React.FC = () => {
   const [performanceBenchmark, setPerformanceBenchmark] = useState('');
   const [performanceFee, setPerformanceFee] = useState('');
   const [managementFee, setManagementFee] = useState('');
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -64,14 +67,24 @@ const VaultForm: React.FC = () => {
     setVaultType(event.target.value);
   };
 
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // 确保安全访问 files 数组
+    const file = event.target.files && event.target.files[0];
+    if (file && file.type.substr(0, 5) === "image") {
+      setFilePreview(URL.createObjectURL(file));
+    } else {
+      setFilePreview(null);
+    }
+  };
+
   // 这里仅为展示，需要实现具体逻辑
   const handleTokenAllocationChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     // Handle token allocation change based on the index
   };
 
-  // 处理开关切换
-  const handleToggleHideStrategy = () => {
-    setHideStrategy(!hideStrategy);
+
+  const handleToggleHideStrategy = (value: boolean) => {
+    setHideStrategy(value);
   };
 
   // 处理输入变更
@@ -108,11 +121,36 @@ const VaultForm: React.FC = () => {
 
 
   return (
-    <div className="container w-full mx-auto p-10 mt-10 mb-10 shadow-lg rounded-lg">
+    <div className="container w-full mx-auto p-10 mt-10 mb-10 shadow-xl rounded-2xl">
       <form onSubmit={handleSubmit}>
+        {/* Vault image */}
+        <div className="col-span-full mb-4">
+          <label htmlFor="cover-photo" className="block text-lg font-medium leading-6 ">
+            Vault photo
+          </label>
+          <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+            <div className="text-center">
+              <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                <label
+                  htmlFor="file-upload"
+                  className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                >
+                  <span>Upload a file</span>
+                  <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} />
+                </label>
+                <p className="pl-1">or drag and drop</p>
+              </div>
+              {filePreview && (
+                <img src={filePreview} alt="File preview" className="mt-4 max-h-40 w-auto items-center" />
+              )}
+              <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+            </div>
+          </div>
+        </div>
+
         {/* Vault Name */}
-        <div className="mb-4 flex items-center">
-          <label htmlFor="vaultName" className="block text-lg font-semibold mb-2 min-w-[160px] whitespace-nowrap">Vault Name:</label>
+        < div className="mb-4 flex items-center" >
+          <label htmlFor="vaultName" className="mr-6 block text-lg font-medium mb-2 min-w-[160px] whitespace-nowrap">Vault Name</label>
           <input
             type="text"
             id="vaultName"
@@ -122,11 +160,11 @@ const VaultForm: React.FC = () => {
             className="input input-bordered w-full"
             placeholder="Enter Vault Name"
           />
-        </div>
+        </div >
 
         {/* Vault Symbol */}
-        <div className="mb-4 flex items-center">
-          <label htmlFor="vaultSymbol" className="block text-lg font-semibold mb-2 min-w-[160px] whitespace-nowrap">Vault Symbol:</label>
+        < div className="mb-4 flex items-center" >
+          <label htmlFor="vaultSymbol" className="mr-6 block text-lg font-medium mb-2 min-w-[160px] whitespace-nowrap">Vault Symbol</label>
           <input
             type="text"
             id="vaultSymbol"
@@ -136,11 +174,11 @@ const VaultForm: React.FC = () => {
             className="input input-bordered w-full"
             placeholder="Enter Vault Symbol"
           />
-        </div>
+        </div >
 
         {/* Vault Description */}
-        <div className="mb-4 flex items-center">
-          <label htmlFor="vaultDescription" className="block text-lg font-semibold mb-2 min-w-[160px] whitespace-nowrap">Vault Description:</label>
+        < div className="mb-4 flex items-center" >
+          <label htmlFor="vaultDescription" className="block text-lg font-medium mb-2 min-w-[160px] whitespace-nowrap mr-6">Vault Description</label>
           <textarea
             id="vaultDescription"
             name="vaultDescription"
@@ -149,11 +187,11 @@ const VaultForm: React.FC = () => {
             className="textarea textarea-bordered w-full"
             placeholder="Describe the Vault"
           ></textarea>
-        </div>
+        </div >
 
         {/* Acceptable Deposit */}
-        <div className="mb-4 flex items-center">
-          <span className="block text-lg font-semibold mb-2 mr-2">Acceptable Deposit:</span>
+        < div className="indicator mb-4 flex items-center w-full" >
+          <span className="block text-lg font-medium mr-5">Acceptable Deposit</span>
           <div className="flex gap-2">
             {(['USDC'] as DepositType[]).map((currency) => (
               <label key={currency} className={`btn btn-sm ${formData.acceptableDeposit === currency ? 'btn-active' : 'btn-outline'}`}>
@@ -169,11 +207,11 @@ const VaultForm: React.FC = () => {
               </label>
             ))}
           </div>
-        </div>
+        </div >
 
         {/* Manager Deposit */}
-        <div className="mb-4 flex items-center">
-          <span className="block text-lg font-semibold mb-2 mr-2">Manager Deposit:</span>
+        < div className=" mb-4 flex items-center w-full" >
+          <span className="block text-lg font-medium mr-9">Manager Deposit</span>
           <div className="flex gap-2 items-center">
             {(['USDC'] as DepositType[]).map((currency) => (
               <button
@@ -194,75 +232,97 @@ const VaultForm: React.FC = () => {
               placeholder="Amount"
             />
           </div>
-        </div>
+        </div >
+
 
         {/* Strategy */}
-        <span className="block text-lg font-semibold mb-4 mr-2">Strategy:</span>
+        < div className=" mb-2 flex items-center" >
+
+          < span className="block text-lg font-medium mb-1 mr-2" > Strategy</span >
+        </div>
         <TabsComponent strategy={strategy} setStrategy={setStrategy} />
 
 
         {/* Hide Strategy Switch */}
-        <div className="mb-4 flex items-center justify-between">
-          <div className="tooltip tooltip-left" data-tip="Choose whether to hide the strategy details from the vault page">
-            <label className="block text-lg font-semibold mb-2 whitespace-nowrap">Hide strategy?</label>
-          </div>
-          <div className="form-control">
-            <label className="label cursor-pointer">
-              <span className="label-text mr-1">no</span>
-              <input type="checkbox" checked={hideStrategy} onChange={handleToggleHideStrategy} className="toggle toggle-info" />
-              <span className="label-text ml-1">yes</span>
-            </label>
+        <div className="mb-2 flex items-center justify-between">
+          <div className="flex items-center border border-gray-100 rounded-lg p-4 w-full">
+            <div className="tooltip tooltip-left" data-tip="Choose whether to hide the strategy details from the vault page">
+              <span className="indicator-item indicator-start badge badge-neutral cursor-help">?</span>
+            </div>
+            <label className="block text-lg font-medium ml-3 flex-auto">Hide strategy</label>
+            <div className="form-control flex justify-end items-center">
+              <label className="label cursor-pointer flex items-center mr-2">
+                <input type="radio" name="hideStrategy" checked={!hideStrategy} onChange={() => handleToggleHideStrategy(false)} className="radio radio-primary" />
+                <span className="label-text ml-2">No</span>
+              </label>
+              <label className="label cursor-pointer flex items-center">
+                <input type="radio" name="hideStrategy" checked={hideStrategy} onChange={() => handleToggleHideStrategy(true)} className="radio radio-primary" />
+                <span className="label-text ml-2">Yes</span>
+              </label>
+            </div>
           </div>
         </div>
+
+
 
         {/* Performance Benchmark Input */}
         <div className="mb-4 flex items-center justify-between">
-          <div className="tooltip tooltip-left" data-tip="Enter the minimum performance target for the strategy">
-            <label className="block mr-10 text-lg font-semibold mb-2 whitespace-nowrap">Performance Benchmark:</label>
+          <div className="flex items-center border border-gray-100 rounded-lg p-4 w-full">
+            <div className="tooltip tooltip-left" data-tip="Enter the minimum performance target for the strategy">
+              <span className="indicator-item indicator-start badge badge-neutral cursor-help">?</span>
+            </div>
+            <label className="block text-lg font-medium ml-3 flex-auto mr-10">Performance Benchmark</label>
+            <input
+              type="text"
+              value={performanceBenchmark}
+              onChange={(e) => handlePerformInputChange(setPerformanceBenchmark)(e)}
+              className="input input-bordered ml-3"
+              placeholder="e.g., >20%"
+              style={{ flexShrink: 0 }} // 防止输入框被压缩
+            />
           </div>
-          <input
-            type="text"
-            value={performanceBenchmark}
-            onChange={handlePerformInputChange(setPerformanceBenchmark)}
-            className="input input-bordered"
-            placeholder="e.g., >20%"
-          />
         </div>
 
+
         {/* Performance Fee Input */}
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center border border-gray-100 rounded-lg p-4 w-full">
           <div className="tooltip tooltip-left" data-tip="Enter the performance fee percentage">
-            <label className="block text-lg font-semibold mb-2 whitespace-nowrap">Performance Fee:</label>
+            <span className="indicator-item indicator-start badge badge-neutral cursor-help">?</span>
           </div>
+          <label className="block text-lg font-medium ml-3 flex-auto">Performance Fee</label>
           <input
             type="text"
             value={performanceFee}
             onChange={handlePerformInputChange(setPerformanceFee)}
-            className="input input-bordered"
+            className="input input-bordered ml-3"
             placeholder="e.g., 10-50%"
+            style={{ flexShrink: 0 }}
           />
         </div>
 
         {/* Management Fee Input */}
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center border border-gray-100 rounded-lg p-4 w-full">
           <div className="tooltip tooltip-left" data-tip="Enter the management fee percentage">
-            <label className="block text-lg font-semibold mb-2 whitespace-nowrap">Management Fee:</label>
+            <span className="indicator-item indicator-start badge badge-neutral cursor-help">?</span>
           </div>
+          <label className="block text-lg font-medium ml-3 flex-auto">Management Fee</label>
           <input
             type="text"
             value={managementFee}
             onChange={handlePerformInputChange(setManagementFee)}
-            className="input input-bordered"
+            className="input input-bordered ml-3"
             placeholder="e.g., 0-5%"
+            style={{ flexShrink: 0 }}
           />
         </div>
 
+
         {/* Submit Button */}
         <div className="flex justify-center mt-10">
-          <button type="submit" className="btn btn-lg" onClick={handleSubmit}>Create Vault</button>
+          <button type="submit" className="btn btn-lg shadow" onClick={handleSubmit}>Create Vault</button>
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 };
 
@@ -297,6 +357,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) 
     // solana 生态
     { label: 'SOL', value: 'sol' },
     { label: 'JUP', value: 'jup' },
+    { label: 'WETH', value: 'weth' }
 
   ];
 
@@ -334,84 +395,96 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) 
 
   return (
 
-      <div role="tablist" className="tabs tabs-bordered mb-4">
-        <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Trading" />
-        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+    <div role="tablist" className="tabs tabs-bordered mb-4">
+      <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Trading" checked/>
+      <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
         <div className="flex justify-between items-end">
-              <label className="label flex-1">
-                <span className="label-text"></span>
-              </label>
-              <div className="mt-2 mb-2 flex items-center justify-between">
-                <div className="tooltip tooltip-left" data-tip="Select vault type">
-                  <label className="block text-sm font-semibold whitespace-nowrap">Vault Type:</label>
-                </div>
-                <div className="form-control">
-                  <label className="label cursor-pointer">
-                    <span className="label-text ml-1 mr-1">Private</span>
-                    <input
-                      type="checkbox"
-                      checked={vaultType === "public"}
-                      onChange={handleVaultTypeChange}
-                      className="toggle toggle-info"
-                    />
-                    <span className="label-text ml-1">Public</span>
-                  </label>
-                </div>
-              </div>
+          <label className="label flex-1">
+            <span className="label-text"></span>
+          </label>
+          <div className="mt-2 mb-2 flex justify-between items-center">
+            <div className="tooltip tooltip-left" data-tip="Select vault type">
+              <label className="text-md font-medium mr-2">Vault Type:</label>
             </div>
-            <select
-              className="select select-bordered w-full"
-              onChange={handleCryptoChange}
-            >
-              <option disabled selected>Search token</option>
-              {cryptoOptions.map((option) => (
-                <option key={option.value} value={option.value}>{option.label}</option>
-              ))}
-            </select>
-                        {/* 加密货币条目列表 */}
-                        {selectedCryptos.map((crypto, index) => (
-              <div key={crypto.value} className="flex items-center mb-2 mt-2">
-                <div className="flex-none width-8 text-center font-bold">{index + 1}</div>
-                <div className="flex-auto mx-2">
-                  <span className="label-text">{crypto.label}</span>
-                </div>
-                <div className="flex-auto mx-2">
-                  <InputNumber
-                    min={0}
-                    max={100}
-                    value={crypto.percentage ?? 0}
-                    onChange={(value) => handlePercentageChange(value ?? 0, index)}
-                    formatter={value => `${value}%`}
-                    parser={value => parseFloat(value?.replace('%', '') ?? '')}
-                  />
-                </div>
-                <button
-                  className="btn btn-circle btn-xs"
-                  onClick={() => handleRemoveCrypto(index)}
-                >
-                  x
-                </button>
-              </div>
-            ))}
-            {/* 总百分比超过100%的错误信息 */}
-            {totalPercentage > 100 && (
-              <div className="alert alert-error mt-4">
-                <div className="flex-1">
-                  <label>Error: The total percentage exceeds 100%</label>
-                </div>
-              </div>
-            )}
+            <div className="flex items-center">
+              <label className="label cursor-pointer flex items-center">
+                <input
+                  type="radio"
+                  name="vaultType"
+                  className="radio radio-primary text-primary mr-2"
+                  checked={vaultType === "private"}
+                  onChange={() => setVaultType("private")}
+                />
+                <span className="label-text">Private</span>
+              </label>
+              <label className="label cursor-pointer flex items-center">
+                <input
+                  type="radio"
+                  name="vaultType"
+                  className="radio radio-primary text-primary mr-2"
+                  checked={vaultType === "public"}
+                  onChange={() => setVaultType("public")}
+                />
+                <span className="label-text">Public</span>
+              </label>
+            </div>
+          </div>
 
         </div>
+        <select
+          className="select select-bordered w-full"
+          onChange={handleCryptoChange}
+        >
+          <option disabled selected>Search token</option>
+          {cryptoOptions.map((option) => (
+            <option key={option.value} value={option.value}>{option.label}</option>
+          ))}
+        </select>
+        {/* 加密货币条目列表 */}
+        {selectedCryptos.map((crypto, index) => (
+          <div key={crypto.value} className="flex items-center mb-2 mt-2">
+            <div className="flex-none w-8 text-center font-bold">{index + 1}</div>
+            <div className="flex-auto mx-2 w-60">
+              <span className="label-text">{crypto.label}</span>
+            </div>
+            <div className="flex-auto mx-2">
+              <InputNumber
+                min={0}
+                max={100}
+                value={crypto.percentage ?? 0}
+                onChange={(value) => handlePercentageChange(value ?? 0, index)}
+                formatter={value => `${value}%`}
+                parser={value => parseFloat(value?.replace('%', '') ?? '')}
+                className="w-full"
+              />
+            </div>
+            <button
+              className="btn btn-circle btn-xs"
+              onClick={() => handleRemoveCrypto(index)}
+            >
+              x
+            </button>
+          </div>
+        ))}
+        {/* 总百分比超过100%的错误信息 */}
+        {totalPercentage > 100 && (
+          <div className="alert alert-error mt-4">
+            <div className="flex-1">
+              <label>Error: The total percentage exceeds 100%</label>
+            </div>
+          </div>
+        )}
 
-          
+      </div>
 
-        <input type="radio" name="my_tabs_1" role="tab" className="tab tab-disabled" aria-label="LP Farming" />
-        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">🏃 Coming soon...</div>
 
-        <input type="radio" name="my_tabs_1" role="tab" className="tab tab-disabled" aria-label="Lending" />
-        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">🏃 Coming soon...</div>
-      </div >
+
+      <input type="radio" name="my_tabs_1" role="tab" className="tab tab-disabled" aria-label="LP Farming" />
+      <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">🏃 Coming soon...</div>
+
+      <input type="radio" name="my_tabs_1" role="tab" className="tab tab-disabled" aria-label="Lending" />
+      <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">🏃 Coming soon...</div>
+    </div >
 
 
   );

@@ -14,7 +14,11 @@ module.exports = {
     themes: ["light", "dark", "cupcake","emberald","winter","wireframe"],
   },
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Open Sans', 'system-ui', 'sans-serif'],
+      },
+    },
   },
   plugins: [require('daisyui')],
 };

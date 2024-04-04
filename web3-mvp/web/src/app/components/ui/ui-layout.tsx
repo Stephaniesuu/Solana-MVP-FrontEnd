@@ -21,19 +21,19 @@ export function UiLayout({
 
   return (
     <div data-theme="winter" className="h-full flex flex-col ">
-      <div className="navbar bg-base-300">
+      <div className="navbar bg-base-100 glass shadow-md">
         <div className="flex-1 flex justify-start">
-          <a className="btn btn-ghost text-3xl font-extrabold" href='/dashboard'>Axon</a>
+          <a className="btn btn-ghost text-3xl font-extrabold axon-brand" href='/marketplace'>Axon</a>
         </div>
         <div className='flex-1 flex justify-center'>
-          <Link to="/createVault" className=" w-60 btn btn-m text-lg">
+          <Link to="/createVault" className="btn w-60 btn-m text-lg shadow-md ">
             Create Vault
           </Link>
         </div>
         <div className='flex-1 flex justify-end'>
           <div className="flex space-x-2 px-4 justify-end">
-            <WalletButton />
             <ClusterUiSelect />
+            <WalletButton />
           </div>
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -67,12 +67,13 @@ export function UiLayout({
         </Suspense>
         <Toaster position="bottom-right" />
       </div>
-      <footer className="footer footer-center p-4 bg-base-300 text-base-content">
+      <footer className="footer footer-center p-2 bg-base-300 text-base-content">
         <aside>
           <p>Copyright © 2024 - All right reserved by ACME Industries Ltd</p>
         </aside>
       </footer>
     </div>
+
   );
 }
 
