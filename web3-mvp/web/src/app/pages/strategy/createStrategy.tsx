@@ -235,7 +235,7 @@ const VaultForm: React.FC = () => {
             />
           </div>
         </div >
-        
+
 
 
         {/* Strategy */}
@@ -325,9 +325,9 @@ const VaultForm: React.FC = () => {
           <button type="submit" className="btn btn-lg shadow" onClick={handleSubmit}>Create Vault</button>
         </div>
         {isModalOpen && (
-          <div className="fixed inset-0 z-[80] overflow-x-hidden overflow-y-auto">
+          <div className="mt-80 fixed inset-20 z-[80] overflow-x-hidden overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen">
-              <div className="bg-white shadow-lg rounded-xl dark:bg-gray-800 p-4 sm:p-10 text-center overflow-y-auto relative max-w-lg mx-auto">
+              <div className="bg-white shadow-lg rounded-xl dark:bg-gray-800 p-4 sm:p-10 text-center overflow-hidden relative max-w-lg mx-auto">
                 <div className="absolute top-2 right-2">
                   <button
                     type="button"

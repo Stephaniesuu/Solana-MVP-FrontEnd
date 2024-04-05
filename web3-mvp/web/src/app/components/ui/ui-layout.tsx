@@ -21,12 +21,12 @@ export function UiLayout({
 
   return (
     <div data-theme="winter" className="flex flex-col absolute top-0 h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"> 
-          <div className="navbar  rounded-b-[36px] py-3 px-4 bg-base-100 bg-opacity-60 glass shadow-md fixed top-0 w-full z-50 backdrop-blur-sm mb-5">
+          <div className="navbar  rounded-b-[36px] py-3 px-4 bg-base-100 bg-opacity-60 glass shadow-md fixed top-0 w-full z-50 backdrop-blur-sm mb-5 animate-fade-down animate-ease-in-out animate-alternate">
             <div className="flex-1 flex justify-start">
-              <a className="btn btn-ghost text-3xl font-extrabold axon-brand" href='/marketplace'>Axon</a>
+              <a className="btn btn-ghost text-5xl font-extrabold" style={{fontFamily: 'Rubik Doodle Shadow'}} href='/marketplace'>Axon</a>
             </div>
-            <div className='flex-1 flex justify-center'>
-              <Link to="/createVault" className="btn w-60 btn-m text-lg shadow-md rounded-2xl">
+            <div className='flex-1 flex justify-center '>
+              <Link to="/createVault" className="  btn w-60 btn-m text-lg shadow-md rounded-2xl">
                 Create Vault
               </Link>
             </div>
@@ -55,7 +55,7 @@ export function UiLayout({
           <ClusterChecker>
             <AccountChecker />
           </ClusterChecker>
-          <div className="flex-grow mx-4 lg:mx-auto mt-20 z-49">
+          <div className="flex-grow mx-4 lg:mx-auto mt-20 z-49 animate-fade-down animate-ease-in-out animate-alternate">
             <Suspense
               fallback={
                 <div className="text-center my-32">

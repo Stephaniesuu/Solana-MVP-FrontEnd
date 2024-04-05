@@ -1,9 +1,11 @@
 # web3-mvp
 
 ## tech stacks
+
 * TypeScript
 * tailwindcss
 * React
+* [Animation](https://tailwindcss-animated.com)
 
 ## Getting Started
 

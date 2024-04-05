@@ -3,6 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Shadows+Into+Light&display=swap')
 
 html,
 body,
@@ -28,5 +29,19 @@ body,
 .wallet-adapter-dropdown-list,
 .wallet-adapter-button {
   font-family: inherit !important;
+}
+
+
+.shadows-into light-regular {
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.axon-brand {
+  font-family: 'Dancing Script', cursive !important;
+  font-size: 3rem; /* 对应于text-3xl */
+  font-weight: 700; /* 对应于font-extrabold */
 }
 
