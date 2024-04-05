@@ -20,60 +20,60 @@ export function UiLayout({
   const { pathname } = useLocation();
 
   return (
-    <div data-theme="winter" className="h-full flex flex-col ">
-      <div className="navbar bg-base-100 bg-opacity-60 glass shadow-md fixed top-0 w-full z-50 backdrop-blur-sm ">
-        <div className="flex-1 flex justify-start">
-          <a className="btn btn-ghost text-3xl font-extrabold axon-brand" href='/marketplace'>Axon</a>
-        </div>
-        <div className='flex-1 flex justify-center'>
-          <Link to="/createVault" className="btn w-60 btn-m text-lg shadow-md">
-            Create Vault
-          </Link>
-        </div>
-        <div className='flex-1 flex justify-end'>
-          <div className="flex space-x-2 px-4 justify-end">
-            <ClusterUiSelect />
-            <WalletButton />
-          </div>
-          <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img alt="User avatar" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+    <div data-theme="winter" className="flex flex-col absolute top-0 h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"> 
+          <div className="navbar  rounded-b-[36px] py-3 px-4 bg-base-100 bg-opacity-60 glass shadow-md fixed top-0 w-full z-50 backdrop-blur-sm mb-5">
+            <div className="flex-1 flex justify-start">
+              <a className="btn btn-ghost text-3xl font-extrabold axon-brand" href='/marketplace'>Axon</a>
+            </div>
+            <div className='flex-1 flex justify-center'>
+              <Link to="/createVault" className="btn w-60 btn-m text-lg shadow-md rounded-2xl">
+                Create Vault
+              </Link>
+            </div>
+            <div className='flex-1 flex justify-end'>
+              <div className="flex space-x-2 px-4 justify-end">
+                <ClusterUiSelect />
+                <WalletButton />
+              </div>
+              <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img alt="User avatar" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  </div>
+                </div>
+                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                  <li>
+                    <a className="justify-between" onClick={() => window.location.href = '/profile'}>
+                      Profile
+                      <span className="badge">New</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
-            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-              <li>
-                <a className="justify-between" onClick={() => window.location.href = '/profile'}>
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-            </ul>
           </div>
+          <ClusterChecker>
+            <AccountChecker />
+          </ClusterChecker>
+          <div className="flex-grow mx-4 lg:mx-auto mt-20 z-49">
+            <Suspense
+              fallback={
+                <div className="text-center my-32">
+                  <span className="loading loading-spinner loading-lg"></span>
+                </div>
+              }
+            >
+              {children}
+            </Suspense>
+            <Toaster position="bottom-right" />
+          </div>
+          <footer className="footer footer-center p-2 bg-base-200 text-base-content bg-transparent">
+            <aside>
+              <p>Copyright © 2024 - All right reserved by ACME Industries Ltd</p>
+            </aside>
+          </footer>
         </div>
-      </div>
 
-      <ClusterChecker>
-        <AccountChecker />
-      </ClusterChecker>
-      <div className="flex-grow mx-4 lg:mx-auto mt-7">
-        <Suspense
-          fallback={
-            <div className="text-center my-32">
-              <span className="loading loading-spinner loading-lg"></span>
-            </div>
-          }
-        >
-          {children}
-        </Suspense>
-        <Toaster position="bottom-right" />
-      </div>
-      <footer className="footer footer-center p-2 bg-base-300 text-base-content">
-        <aside>
-          <p>Copyright © 2024 - All right reserved by ACME Industries Ltd</p>
-        </aside>
-      </footer>
-    </div>
 
   );
 }

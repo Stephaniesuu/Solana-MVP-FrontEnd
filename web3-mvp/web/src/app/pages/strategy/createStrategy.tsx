@@ -26,6 +26,7 @@ const VaultForm: React.FC = () => {
   const [performanceFee, setPerformanceFee] = useState('');
   const [managementFee, setManagementFee] = useState('');
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
 
@@ -94,6 +95,7 @@ const VaultForm: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     console.log(formData);
+    setIsModalOpen(true);
     const myHeaders = new Headers();
 
     myHeaders.append("x-api-key", "g9JMpg_nO1A0BF7z");
@@ -121,7 +123,7 @@ const VaultForm: React.FC = () => {
 
 
   return (
-    <div className="container w-full mx-auto p-10 mt-10 mb-10 shadow-xl rounded-2xl">
+    <div className="container w-full mx-auto p-10 mt-10 mb-10 shadow-xl rounded-2xl bg-white shadow-purple-200 ">
       <form onSubmit={handleSubmit}>
         {/* Vault image */}
         <div className="col-span-full mb-4">
@@ -233,12 +235,13 @@ const VaultForm: React.FC = () => {
             />
           </div>
         </div >
+        
 
 
         {/* Strategy */}
         < div className=" mb-2 flex items-center" >
 
-          < span className="block text-lg font-medium mb-1 mr-2" > Strategy</span >
+          < span className="mt-2 block text-lg font-medium mb-1 mr-2" > Strategy</span >
         </div>
         <TabsComponent strategy={strategy} setStrategy={setStrategy} />
 
@@ -321,7 +324,46 @@ const VaultForm: React.FC = () => {
         <div className="flex justify-center mt-10">
           <button type="submit" className="btn btn-lg shadow" onClick={handleSubmit}>Create Vault</button>
         </div>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-[80] overflow-x-hidden overflow-y-auto">
+            <div className="flex items-center justify-center min-h-screen">
+              <div className="bg-white shadow-lg rounded-xl dark:bg-gray-800 p-4 sm:p-10 text-center overflow-y-auto relative max-w-lg mx-auto">
+                <div className="absolute top-2 right-2">
+                  <button
+                    type="button"
+                    className="flex justify-center items-center text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 p-2 rounded-lg"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    <span className="sr-only">Close</span>
+                    <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+                  </button>
+                </div>
+                <span className="mb-4 inline-flex justify-center items-center w-12 h-12 rounded-full border-4 border-green-50 bg-green-100 text-green-500 dark:bg-green-700 dark:border-green-600">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 16 16">
+                    <path fillRule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z" />
+                  </svg>
+                </span>
+                <h3 className="mb-2 text-xl font-bold text-gray-800 dark:text-gray-200">
+                  Vault successfully created!
+                </h3>
+                <p className="text-gray-500">
+                  You can check the <a className="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline font-medium" href="/vaultdetail">details</a> of your vault.
+                </p>
+                <div className="mt-6 flex justify-center gap-x-4">
+                  <button
+                    type="button"
+                    className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </form >
+
     </div >
   );
 };
@@ -488,4 +530,4 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) 
   );
 };
 
-
+TabsComponent;

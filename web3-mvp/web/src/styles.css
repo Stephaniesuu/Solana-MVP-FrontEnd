@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* 在 @tailwind 指令之后添加您的自定义样式 */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,6 +9,7 @@ body,
 #root {
   height: 100%;
 }
+
 .wallet-adapter-button-trigger {
   background: linear-gradient(135deg, rgb(176, 96, 198), rgb(140, 58, 180)) !important;
   border-radius: 8px !important;
@@ -19,10 +19,12 @@ body,
   transition: transform 0.3s ease !important; 
   box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1); 
 }
+
 .wallet-adapter-button-trigger:hover {
-  transform: translateY(-2px); 
-  background: linear-gradient(135deg, rgb(140, 58, 180), rgb(176, 96, 198)) !important; /* 鼠标悬浮时变化渐变背景 */
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgb(140, 58, 180), rgb(176, 96, 198)) !important;
 }
+
 .wallet-adapter-dropdown-list,
 .wallet-adapter-button {
   font-family: inherit !important;
