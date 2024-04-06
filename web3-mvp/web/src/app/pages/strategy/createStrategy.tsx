@@ -1,33 +1,67 @@
-import React, { useState, useRef, ChangeEvent } from 'react';
+import React, { useState, useRef, ChangeEvent, useMemo } from 'react';
 import { Form, InputNumber, Alert } from 'antd';
+import { useParams } from 'react-router-dom';
+import { PublicKey } from '@solana/web3.js';
 
 type DepositType = 'USDC' | 'USDT';
 
-interface VaultFormData {
-  vaultName: string;
-  vaultSymbol: string;
-  vaultDescription: string;
-  acceptableDeposit: DepositType;
-  managerDeposit: { currency: DepositType; amount: string };
+interface StrategyItem {
+  symbol: string;
+  weight: number;
+}
+
+
+interface SubmitFormData {
+  vaultSymbol: string | number | readonly string[] | undefined;
+  ownerAddr: string;
+  description: string;
+  name: string;
+  managementFee: number;
+  performanceThreshold: number;
+  // photoLink: string;
+  totalSupply: number;
+  strategy: StrategyItem[];
 }
 
 const VaultForm: React.FC = () => {
-  const [formData, setFormData] = useState<VaultFormData>({
-    vaultName: '',
+
+  const params = useParams();
+  const address = useMemo(() => {
+    if (!params.address) {
+      return;
+    }
+    try {
+      return new PublicKey(params.address);
+    } catch (e) {
+      console.log(`Invalid public key`, e);
+    }
+  }, [params]);
+  if (!address) {
+    return <div>Error loading account</div>;
+  }
+
+  const [formData, setFormData] = useState<SubmitFormData>({
+    description: '',
+    name: '',
     vaultSymbol: '',
-    vaultDescription: '',
-    acceptableDeposit: 'USDC', // 默认选项
-    managerDeposit: { currency: 'USDC', amount: '' },
+    ownerAddr: '',
+    managementFee: 0,
+    performanceThreshold: 0,
+    // photoLink: '',
+    totalSupply: 0,
+    strategy: [],
   });
-  const [strategy, setStrategy] = useState('trading');
+
+  const [investmentStrategy, setInvestmentStrategy] = useState('trading'); //当前策略类型
   const [vaultType, setVaultType] = useState('private');
   const [hideStrategy, setHideStrategy] = useState(false);
   const [performanceBenchmark, setPerformanceBenchmark] = useState('');
   const [performanceFee, setPerformanceFee] = useState('');
   const [managementFee, setManagementFee] = useState('');
+  const [totalsupply, setTotalSupply] = useState('');
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [strategy, setStrategy] = useState<StrategyItem[]>([]);
 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -39,30 +73,30 @@ const VaultForm: React.FC = () => {
   };
 
 
-  const handleAcceptableDepositChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      acceptableDeposit: event.target.value as DepositType,
-    });
-  };
+  // const handleAcceptableDepositChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFormData({
+  //     ...formData,
+  //     acceptableDeposit: event.target.value as DepositType,
+  //   });
+  // };
 
-  const handleManagerDepositCurrencyChange = (currency: DepositType) => {
-    setFormData({
-      ...formData,
-      managerDeposit: { ...formData.managerDeposit, currency },
-    });
-  };
+  // const handleManagerDepositCurrencyChange = (currency: DepositType) => {
+  //   setFormData({
+  //     ...formData,
+  //     managerDeposit: { ...formData.managerDeposit, currency },
+  //   });
+  // };
 
-  const handleManagerDepositAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      managerDeposit: { ...formData.managerDeposit, amount: event.target.value },
-    });
-  };
+  // const handleManagerDepositAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFormData({
+  //     ...formData,
+  //     managerDeposit: { ...formData.managerDeposit, amount: event.target.value },
+  //   });
+  // };
 
-  const handleStrategyChange = (selectedStrategy: string) => {
-    setStrategy(selectedStrategy);
-  };
+  // const handleStrategyChange = (selectedStrategy: string) => {
+  //   setStrategy(selectedStrategy);
+  // };
 
   const handleVaultTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVaultType(event.target.value);
@@ -78,35 +112,38 @@ const VaultForm: React.FC = () => {
     }
   };
 
-  // 这里仅为展示，需要实现具体逻辑
-  const handleTokenAllocationChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    // Handle token allocation change based on the index
-  };
-
 
   const handleToggleHideStrategy = (value: boolean) => {
     setHideStrategy(value);
   };
 
-  // 处理输入变更
+
   const handlePerformInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setter(event.target.value);
   };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     console.log(formData);
+
+    const submitData: SubmitFormData = {
+      ownerAddr: address.toString(), // This should be set based on user's wallet address
+      description: formData.description,
+      name: formData.name, // Replace with actual portfolio name
+      managementFee: parseFloat(managementFee),
+      performanceThreshold: parseFloat(performanceBenchmark),
+      // photoLink: photoLink, // This should be set based on uploaded photo
+      totalSupply: parseInt(totalsupply, 10),
+      strategy: strategy, // Fix: Wrap the strategy value in an array
+      vaultSymbol: undefined
+    };
+
     setIsModalOpen(true);
     const myHeaders = new Headers();
 
-    myHeaders.append("x-api-key", "g9JMpg_nO1A0BF7z");
     console.log(myHeaders)
-    const TokenCreate = new FormData();
-    TokenCreate.append("network", "devnet");
-    TokenCreate.append("wallet", '5fZrWinrY1emHLoQ75wUmGjN8WqpqXYTcFX6TVyx1wDD');
-    TokenCreate.append("name", formData.vaultName);
-    TokenCreate.append("symbol", formData.vaultSymbol);
-    TokenCreate.append("description", formData.vaultDescription);
-    // TokenCreate.append("file", "geeko.jpeg");
+    const TokenCreate = JSON.stringify(submitData);
+
     console.log("mint", TokenCreate);
     const requestOptions: RequestInit = {
       method: 'POST',
@@ -123,6 +160,7 @@ const VaultForm: React.FC = () => {
 
 
   return (
+
     <div className="container w-full mx-auto p-10 mt-10 mb-10 shadow-xl rounded-2xl bg-white shadow-purple-200 ">
       <form onSubmit={handleSubmit}>
         {/* Vault image */}
@@ -156,8 +194,8 @@ const VaultForm: React.FC = () => {
           <input
             type="text"
             id="vaultName"
-            name="vaultName"
-            value={formData.vaultName}
+            name="name"
+            value={formData.name}
             onChange={handleInputChange}
             className="input input-bordered w-full"
             placeholder="Enter Vault Name"
@@ -183,8 +221,8 @@ const VaultForm: React.FC = () => {
           <label htmlFor="vaultDescription" className="block text-lg font-medium mb-2 min-w-[160px] whitespace-nowrap mr-6">Vault Description</label>
           <textarea
             id="vaultDescription"
-            name="vaultDescription"
-            value={formData.vaultDescription}
+            name="description"
+            value={formData.description}
             onChange={handleInputChange}
             className="textarea textarea-bordered w-full"
             placeholder="Describe the Vault"
@@ -196,13 +234,13 @@ const VaultForm: React.FC = () => {
           <span className="block text-lg font-medium mr-5">Acceptable Deposit</span>
           <div className="flex gap-2">
             {(['USDC'] as DepositType[]).map((currency) => (
-              <label key={currency} className={`btn btn-sm ${formData.acceptableDeposit === currency ? 'btn-active' : 'btn-outline'}`}>
+              <label key={currency} className={`btn btn-sm btn-outline `}>
                 <input
                   type="radio"
                   name="acceptableDeposit"
                   value={currency}
-                  checked={formData.acceptableDeposit === currency}
-                  onChange={handleAcceptableDepositChange}
+                  // checked={formData.acceptableDeposit === currency}
+                  // onChange={handleAcceptableDepositChange}
                   className="hidden"
                 />
                 {currency}
@@ -219,8 +257,9 @@ const VaultForm: React.FC = () => {
               <button
                 key={`manager-${currency}`}
                 type="button"
-                onClick={() => handleManagerDepositCurrencyChange(currency)}
-                className={`btn btn-sm ${formData.managerDeposit.currency === currency ? 'btn-active' : 'btn-outline'}`}
+                // onClick={() => handleManagerDepositCurrencyChange(currency)}
+                // className={`btn btn-sm ${formData.managerDeposit.currency === currency ? 'btn-active' : 'btn-outline'}`}
+                className='btn btn-sm btn-outline'
               >
                 {currency}
               </button>
@@ -228,8 +267,8 @@ const VaultForm: React.FC = () => {
             <input
               type="text"
               name="managerAmount"
-              value={formData.managerDeposit.amount}
-              onChange={handleManagerDepositAmountChange}
+              // value={formData.amount}
+              onChange={handleInputChange}
               className="input input-bordered flex-1 input-sm w-24"
               placeholder="Amount"
             />
@@ -240,9 +279,10 @@ const VaultForm: React.FC = () => {
 
         {/* Strategy */}
         < div className=" mb-2 flex items-center" >
-
           < span className="mt-2 block text-lg font-medium mb-1 mr-2" > Strategy</span >
         </div>
+        {/* Strategy Tabs */}
+
         <TabsComponent strategy={strategy} setStrategy={setStrategy} />
 
 
@@ -319,11 +359,28 @@ const VaultForm: React.FC = () => {
           />
         </div>
 
+        {/* Token Supply Input */}
+        <div className="mb-4 flex items-center border border-gray-100 rounded-lg p-4 w-full">
+          <div className="tooltip tooltip-left" data-tip="Enter the management fee percentage">
+            <span className="indicator-item indicator-start badge badge-neutral cursor-help">?</span>
+          </div>
+          <label className="block text-lg font-medium ml-3 flex-auto">Total Supply</label>
+          <input
+            type="text"
+            value={totalsupply}
+            onChange={handlePerformInputChange(setTotalSupply)}
+            className="input input-bordered ml-3"
+            placeholder="e.g., 1000"
+            style={{ flexShrink: 0 }}
+          />
+        </div>
+
 
         {/* Submit Button */}
         <div className="flex justify-center mt-10">
           <button type="submit" className="btn btn-lg shadow" onClick={handleSubmit}>Create Vault</button>
         </div>
+        {/* Create Success notifictaion */}
         {isModalOpen && (
           <div className="mt-80 fixed inset-20 z-[80] overflow-x-hidden overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen">
@@ -373,27 +430,31 @@ export default VaultForm;
 
 
 // strategy component
+interface Crypto {
+  percentage: number;
+  label: string;
+  value: string;
+}
 
 type TabsComponentProps = {
-  strategy: string;
-  setStrategy: (strategy: string) => void;
+  strategy: StrategyItem[];
+  setStrategy: (strategy: StrategyItem[]) => void;
 };
 
 const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) => {
-  const handleStrategyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStrategy(event.target.value);
-  };
 
 
-  // cryptoOptions
-  interface Crypto {
-    percentage: number;
-    label: string;
-    value: string;
-  }
+
+  // const handleStrategyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setStrategy(event.target.value);
+  // };
+
   const [selectedCryptos, setSelectedCryptos] = useState<Crypto[]>([]);
   const [totalPercentage, setTotalPercentage] = useState(0);
   const [vaultType, setVaultType] = useState('private'); // default value
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
 
   const cryptoOptions = [
     // solana 生态
@@ -434,6 +495,36 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) 
     const newTotalPercentage = newSelectedCryptos.reduce((total, { percentage }) => total + percentage, 0);
     setTotalPercentage(newTotalPercentage);
   };
+
+  const submitStrategy = () => {
+    // 计算选中加密货币的总百分比
+    const totalPercentage = selectedCryptos.reduce((acc, curr) => acc + curr.percentage, 0);
+
+    // 检查总百分比是否等于 100
+    if (totalPercentage !== 100) {
+      // 设置错误信息
+      setError('Error: The total percentage must equal 100%.');
+      return; // 阻止进一步执行
+    }
+
+    // 如果总百分比等于 100，清除之前的错误信息（如果有）
+    setError('');
+
+    // 构造新的策略数组
+    const newStrategy = selectedCryptos.map(crypto => ({
+      symbol: crypto.label,
+      weight: crypto.percentage / 100
+    }));
+
+    // 更新父组件的策略状态
+    setStrategy(newStrategy);
+
+    setSuccessMessage('Strategy updated successfully!');
+    
+    // 清空错误消息
+    setError('');
+  };
+
 
   return (
 
@@ -508,14 +599,25 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ strategy, setStrategy }) 
             </button>
           </div>
         ))}
-        {/* 总百分比超过100%的错误信息 */}
-        {totalPercentage > 100 && (
+
+
+        {error && (
           <div className="alert alert-error mt-4">
             <div className="flex-1">
-              <label>Error: The total percentage exceeds 100%</label>
+              <label>{error}</label>
             </div>
           </div>
         )}
+        {successMessage && (
+          <div className="alert alert-success">
+            {successMessage}
+          </div>
+        )}
+
+        <div className="flex justify-center mt-2">
+          <button type="button" className="btn btn-info mt-4 items-center" onClick={submitStrategy}>confirm</button>
+        </div>
+
 
       </div>
 

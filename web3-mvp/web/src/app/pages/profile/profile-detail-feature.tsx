@@ -1,14 +1,9 @@
 import React, { FC, useMemo, useState } from 'react';
 import { ExplorerLink } from '../../components/cluster/cluster-ui';
 import { PublicKey } from '@solana/web3.js';
-import { useParams, Link } from 'react-router-dom';
-import { AppHero, ellipsify } from '../../components/ui/ui-layout';
-import {
-    AccountBalance,
-    AccountButtons,
-    AccountTokens,
-    AccountTransactions,
-} from '../account/account-ui';
+import { useParams } from 'react-router-dom';
+import { ellipsify } from '../../components/ui/ui-layout';
+
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
@@ -41,6 +36,7 @@ export default function ProfilePage() {
     if (!address) {
         return <div>Error loading account</div>;
     }
+    
     const profile = {
         name: 'Bilie',
         twitterLinked: false,

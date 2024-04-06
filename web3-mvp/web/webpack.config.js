@@ -11,5 +11,10 @@ module.exports = composePlugins(withNx(), withReact(), (config) => {
     stream: require.resolve('stream-browserify'),
   };
 
+  // config.devServer = {
+  //   host: '52.76.0.255',
+  //   port: 3000,
+  // };
+
   return config;
 });
