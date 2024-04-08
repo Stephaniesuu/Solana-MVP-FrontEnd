@@ -1,7 +1,7 @@
 import { WalletButton } from '../solana/solana-provider';
 import { ReactNode, Suspense, useEffect, useRef } from 'react';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { AccountChecker } from '../../pages/account/account-ui';
 import {
@@ -19,18 +19,17 @@ export function UiLayout({
   children: ReactNode;
   links: { label: string; path: string }[];
 }) {
-  const { pathname } = useLocation();
 
   return (
     <div data-theme="winter" className="flex flex-col absolute top-0 h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
-      <div className="navbar  rounded-b-[36px] py-3 px-4 bg-base-100 bg-opacity-60 glass shadow-md fixed top-0 w-full z-50 backdrop-blur-sm mb-5 animate-fade-down animate-ease-in-out animate-alternate">
+      <div className="navbar rounded-b-[36px] py-3 px-4 bg-base-100 bg-opacity-60 glass shadow-md fixed top-0 w-full z-50 backdrop-blur-sm mb-5 animate-fade-down animate-ease-in-out animate-alternate">
         <div className="flex-1 flex justify-start items-center">
           <a className="btn btn-circle text-5xl font-extrabold w-40" href='/marketplace'>
             <img src={AxonImage} alt="Axon" style={{ width: '130px', height: 'auto' }} className=' whitespace-nowrap fixed' />
           </a>
         </div>
         <div className='flex-1 flex justify-center '>
-          <Link to="/createVault" className="  btn w-60 btn-m text-lg shadow-md rounded-2xl">
+          <Link to="/createVault" className=" btn w-60 btn-m text-lg shadow-md rounded-2xl">
             Create Vault
           </Link>
         </div>

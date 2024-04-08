@@ -18,7 +18,7 @@ interface SubmitFormData {
   name: string;
   managementFee: number;
   performanceThreshold: number;
-  // photoLink: string;
+  photoLink: string;
   totalSupply: number;
   strategy: StrategyItem[];
 }
@@ -47,7 +47,7 @@ const VaultForm: React.FC = () => {
     ownerAddr: '',
     managementFee: 0,
     performanceThreshold: 0,
-    // photoLink: '',
+    photoLink: '',
     totalSupply: 0,
     strategy: [],
   });
@@ -124,7 +124,6 @@ const VaultForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(formData);
 
     const submitData: SubmitFormData = {
       ownerAddr: address.toString(), // This should be set based on user's wallet address
@@ -132,19 +131,19 @@ const VaultForm: React.FC = () => {
       name: formData.name, // Replace with actual portfolio name
       managementFee: parseFloat(managementFee),
       performanceThreshold: parseFloat(performanceBenchmark),
-      // photoLink: photoLink, // This should be set based on uploaded photo
+      photoLink: 'photoLink', // This should be set based on uploaded photo
       totalSupply: parseInt(totalsupply, 10),
       strategy: strategy, // Fix: Wrap the strategy value in an array
       vaultSymbol: undefined
     };
 
+    //open modal for successfull creation
     setIsModalOpen(true);
-    const myHeaders = new Headers();
 
-    console.log(myHeaders)
+    const myHeaders = new Headers();
     const TokenCreate = JSON.stringify(submitData);
 
-    console.log("mint", TokenCreate);
+    console.log("Create Vault", TokenCreate);
     const requestOptions: RequestInit = {
       method: 'POST',
       headers: myHeaders,
@@ -152,6 +151,7 @@ const VaultForm: React.FC = () => {
       redirect: 'follow' as RequestRedirect | undefined,
     };
 
+    
     fetch("https://api.shyft.to/sol/v1/token/create_detach", requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
