@@ -2,7 +2,7 @@
 For hackathon development.
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Vp1-M1frxBg?si=qN9FMTZb4lOHgKa4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![](https://i.ytimg.com/vi/Vp1-M1frxBg/maxresdefault.jpg)](https://youtu.be/Vp1-M1frxBg?si=jeqLTuXGjkA2f4ru "")
 
 ## Reference
 
